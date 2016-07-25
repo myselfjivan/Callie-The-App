@@ -18,7 +18,7 @@ class CreateOtpTable extends Migration
             $table->increments('id');
             $table->string('mobile')->index()->unique();
             $table->string('otp');
-            $table->string('status');
+            $table->string('v_status')->nullable();
             $table->timestamp('created_at');
         }
         );

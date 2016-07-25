@@ -10,7 +10,8 @@ class OtpController extends Controller
 {
     //
     public function p_register() {
-        $P_register = $request->get('mobile');
-        
+        $p_register = $request->get('mobile');
+        $token = mt_rand(100000, 999999);
+        $p_register = $token;
     }
 }
