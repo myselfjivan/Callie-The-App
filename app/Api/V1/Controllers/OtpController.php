@@ -41,7 +41,8 @@ class OtpController extends Controller {
                     DB::table('users')->insert(
                     ['mobile' => $otp->mobile,
                     'v_status' => 1,
-                    'apikey' => str_random(120) ]
+                    'apikey' => str_random(120),
+                    'created_at' => date('Y-m-d H:i:s') ]
                     );
                     return $otp;
                 }
