@@ -19,6 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('mobile')->unique();
             $table->string('v_status');
             $table->string('apikey');
+            $table->timestamp('verified_at');
+            $table->timestamp('updated_at');
             $table->rememberToken();
             $table->timestamps();
         });
