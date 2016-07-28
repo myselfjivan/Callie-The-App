@@ -104,4 +104,10 @@ class OtpController extends Controller {
         }
     }
 
+    public function expireUserOtp(Request $request) {
+        $otp = Otp::findOrFail('mobile');
+
+        $this->dispatch(new \App\Jobs\ExpireOtp($otp));
+    }
+
 }

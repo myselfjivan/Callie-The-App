@@ -15,7 +15,7 @@ class CreateOtpTable extends Migration {
         Schema::create('otp', function (Blueprint $table) {
             $table->increments('id');
             $table->string('mobile')->index()->unique();
-            $table->string('otp');
+            $table->string('otp')->nullable();
             $table->string('v_status')->nullable();
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
