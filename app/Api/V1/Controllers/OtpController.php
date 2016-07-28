@@ -105,9 +105,9 @@ class OtpController extends Controller {
     }
 
     public function expireUserOtp(Request $request) {
-        $otp = Otp::findOrFail('mobile');
+        $mobile = $request->get('mobile');
 
-        $this->dispatch(new \App\Jobs\ExpireOtp($otp));
+        $this->dispatch(new \App\Jobs\ExpireOtp($otp))->delay(60 * 10);;
     }
 
 }
