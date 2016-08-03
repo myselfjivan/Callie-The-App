@@ -61,13 +61,13 @@ class OtpController extends Controller {
         try {
             $user = new User();
             foreach ($otps as $otp) {
-                if ($enterdOtp == $otp->otp) {
+                if ($otp!=null && $enterdOtp == $otp->otp) {
                     if (30 > $otp->updated_at->diffInMinutes(Carbon::now())) {
                         $otp->v_status = 1;
                         if ($otp->save()) {
                             $user->mobile = $otp->mobile;
                             $user->v_status = 1;
-                            $user->apikey = str_random(120);
+                            $user->password =  \Hash::make('password');
                             $user->verified_at = Carbon::now();
                             if ($user->save()) {
                                 return $user;
@@ -89,11 +89,11 @@ class OtpController extends Controller {
             //so only one installation at a time -- problem solved
 
             try {
-                $usersArray = $otps = \App\User::where('mobile', $enterdMobile)->get();
+                $usersArray = \App\User::where('mobile', $enterdMobile)->get();
                 foreach ($usersArray as $userSingle) {
-                    if ($enterdOtp == $otp->otp) {
+                    if ($userSingle!= null && $enterdOtp == $otp->otp) {
                         if (30 > $otp->updated_at->diffInMinutes(Carbon::now())) {
-                            $userSingle->apikey = str_random(120);
+                            $userSingle->password = str_random(120);
                             if ($userSingle->save()) {
                                 return $userSingle;
                             } else {
