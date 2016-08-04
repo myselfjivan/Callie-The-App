@@ -65,7 +65,7 @@ class StatusController extends Controller {
         foreach ($users as $user)
         $statuses = \App\Status::where('user_id', $user->id)->get();
         foreach ($statuses as $status)
-            $last = $statuses->last();
+        $last = $statuses->last();
         $arr[] = array('status' => "$last->status", 'updated_at' => "$last->updated_at");
         return json_encode($arr);
     }
