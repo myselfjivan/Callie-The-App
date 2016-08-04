@@ -28,7 +28,9 @@ class OtpController extends Controller {
         try {
             $pregister->mobile = $request->get('mobile');
             $enterdMobile = $request->get('mobile');
-            $pregister->otp = str_random(8);
+            $pregister->otp = str_random(6);
+            $pregister->created_at = Carbon::now();
+            $pregister->updated_at = Carbon::now();
             if ($pregister->save())
                 return $pregister;
             else
@@ -40,7 +42,8 @@ class OtpController extends Controller {
             try {
                 $otps = \App\Otp::where('mobile', $enterdMobile)->get();
                 foreach ($otps as $otp) {
-                    $otp->otp = str_random(8);
+                    $otp->otp = str_random(6);
+                    $otp->updated_at = Carbon::now();
                 }
                 if ($otp->save())
                     return $otp;
@@ -74,11 +77,15 @@ class OtpController extends Controller {
                 if ($otp != null && $enterdOtp == $otp->otp) {
                     if (30 > $otp->updated_at->diffInMinutes(Carbon::now())) {
                         $otp->v_status = 1;
+                        $otp->created_at = $otp->created_at;
+                        $otp->updated_at = Carbon::now();
                         if ($otp->save()) {
                             $user->mobile = $otp->mobile;
                             $user->v_status = 1;
                             $user->password = \Hash::make($enterdOtp . $userMacAddress);
                             $user->verified_at = Carbon::now();
+                            $user->created_at = Carbon::now();
+                            $user->updated_at = Carbon::now();
                             if ($user->save()) {
                                 return $user;
                             } else {
@@ -103,7 +110,9 @@ class OtpController extends Controller {
                 foreach ($usersArray as $userSingle) {
                     if ($userSingle != null && $enterdOtp == $otp->otp) {
                         if (30 > $otp->updated_at->diffInMinutes(Carbon::now())) {
-                            $userSingle->password = str_random(120);
+                            $userSingle->password = \Hash::make($enterdOtp . $userMacAddress);
+                            $userSingle->created_at = $userSingle->created_at;
+                            $userSingle->updated_at = Carbon::now();
                             if ($userSingle->save()) {
                                 return $userSingle;
                             } else {
