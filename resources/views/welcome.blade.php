@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Laravel</title>
+        <title>Calli The App</title>
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 
@@ -38,8 +38,16 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Laravel 5</div>
+                <div class="title">Callie The App</div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>get it on playstore</h2>
+                </div>
             </div>
         </div>
-    </body>
+    </div>
+
+</body>
 </html>

@@ -18,7 +18,7 @@ class OtpController extends Controller {
 
     public function p_register(Request $request) {
         $this->validate($request, [
-            'mobile' => 'required|max:13',
+            'mobile' => 'required',
         ]);
 
         $pregister = new Otp;
