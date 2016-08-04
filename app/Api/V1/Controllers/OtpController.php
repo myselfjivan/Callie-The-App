@@ -17,6 +17,9 @@ class OtpController extends Controller {
     use Helpers;
 
     public function p_register(Request $request) {
+        $this->validate($request, [
+            'mobile' => 'required|max:13',
+        ]);
 
         $pregister = new Otp;
 
@@ -51,8 +54,15 @@ class OtpController extends Controller {
 
     public function p_verify(Request $request) {
 
+        $this->validate($request, [
+            'otp' => 'required|max:8',
+            'mobile' => 'required',
+            'mac' => 'required',
+        ]);
+
         $enterdOtp = $request->get('otp');
         $enterdMobile = $request->get('mobile');
+        $userMacAddress = $request->get('mac');
 
         $otps = \App\Otp::where('mobile', $enterdMobile)->get();
 
@@ -61,13 +71,13 @@ class OtpController extends Controller {
         try {
             $user = new User();
             foreach ($otps as $otp) {
-                if ($otp!=null && $enterdOtp == $otp->otp) {
+                if ($otp != null && $enterdOtp == $otp->otp) {
                     if (30 > $otp->updated_at->diffInMinutes(Carbon::now())) {
                         $otp->v_status = 1;
                         if ($otp->save()) {
                             $user->mobile = $otp->mobile;
                             $user->v_status = 1;
-                            $user->password =  \Hash::make('password');
+                            $user->password = \Hash::make($enterdOtp . $userMacAddress);
                             $user->verified_at = Carbon::now();
                             if ($user->save()) {
                                 return $user;
@@ -91,7 +101,7 @@ class OtpController extends Controller {
             try {
                 $usersArray = \App\User::where('mobile', $enterdMobile)->get();
                 foreach ($usersArray as $userSingle) {
-                    if ($userSingle!= null && $enterdOtp == $otp->otp) {
+                    if ($userSingle != null && $enterdOtp == $otp->otp) {
                         if (30 > $otp->updated_at->diffInMinutes(Carbon::now())) {
                             $userSingle->password = str_random(120);
                             if ($userSingle->save()) {
