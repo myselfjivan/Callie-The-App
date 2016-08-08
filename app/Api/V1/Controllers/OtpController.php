@@ -4,13 +4,9 @@ namespace App\Api\V1\Controllers;
 
 use App\Otp;
 use App\User;
-use DB;
 use Carbon\Carbon;
-use App\Http\Requests;
 use Dingo\Api\Routing\Helpers;
-use Illuminate\Http\Response;
 use Illuminate\Http\Request;
-use Exception;
 
 class OtpController extends Controller {
 
@@ -29,6 +25,8 @@ class OtpController extends Controller {
             $pregister->mobile = $request->get('mobile');
             $enterdMobile = $request->get('mobile');
             $pregister->otp = str_random(6);
+            $pregister->ip_address = $request->ip();
+            $pregister->fingerprint = $request->fingerprint();
             $pregister->created_at = Carbon::now();
             $pregister->updated_at = Carbon::now();
             if ($pregister->save())
@@ -43,6 +41,8 @@ class OtpController extends Controller {
                 $otps = \App\Otp::where('mobile', $enterdMobile)->get();
                 foreach ($otps as $otp) {
                     $otp->otp = str_random(6);
+                    $pregister->ip_address = $request->ip();
+                    $pregister->fingerprint = $request->fingerprint();
                     $otp->updated_at = Carbon::now();
                 }
                 if ($otp->save())
@@ -66,6 +66,8 @@ class OtpController extends Controller {
         $enterdOtp = $request->get('otp');
         $enterdMobile = $request->get('mobile');
         $userMacAddress = $request->get('mac');
+        $ip = $request->ip();
+        $fingureprint = $request->fingerprint();
 
         $otps = \App\Otp::where('mobile', $enterdMobile)->get();
 
@@ -83,6 +85,8 @@ class OtpController extends Controller {
                             $user->mobile = $otp->mobile;
                             $user->v_status = 1;
                             $user->password = \Hash::make($enterdOtp . $userMacAddress);
+                            $user->ip_address = $request->ip();
+                            $user->fingerprint = $request->fingerprint();
                             $user->verified_at = Carbon::now();
                             $user->created_at = Carbon::now();
                             $user->updated_at = Carbon::now();
@@ -111,6 +115,8 @@ class OtpController extends Controller {
                     if ($userSingle != null && $enterdOtp == $otp->otp) {
                         if (30 > $otp->updated_at->diffInMinutes(Carbon::now())) {
                             $userSingle->password = \Hash::make($enterdOtp . $userMacAddress);
+                            $userSingle->ip_address = $request->ip();
+                            $userSingle->fingerprint = $request->fingerprint();
                             $userSingle->created_at = $userSingle->created_at;
                             $userSingle->updated_at = Carbon::now();
                             if ($userSingle->save()) {

@@ -17,6 +17,8 @@ class CreateOtpTable extends Migration {
             $table->string('mobile')->index()->unique();
             $table->string('otp')->nullable();
             $table->string('v_status')->nullable();
+            $table->string('ip_address');
+            $table->string('fingerprint');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
         }
