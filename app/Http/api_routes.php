@@ -8,6 +8,13 @@ $api->version('v1', function ($api) {
     $api->post('auth/pregister', 'App\Api\V1\Controllers\OtpController@p_register');
     $api->post('auth/pverify', 'App\Api\V1\Controllers\OtpController@p_verify');
 
+    //protected routes with oauth for everything -- test 
+    $api->group(['middleware' => 'oauth'], function ($api) {
+        $api->post('auth/opreg', fucntion(){
+            return Response::json(Authorizer::issueAccessToken());
+        });
+    });
+
     //routes for user authentication
     $api->post('auth/login', 'App\Api\V1\Controllers\AuthenticateController@authenticate');
 
