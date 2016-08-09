@@ -15,6 +15,7 @@ class OtpController extends Controller {
     public function p_register(Request $request) {
         $this->validate($request, [
             'mobile' => 'phone:US,BE,IN',
+            'country_code' => 'required_with:mobile',
         ]);
 
         $pregister = new Otp;
@@ -22,8 +23,8 @@ class OtpController extends Controller {
         //check if user exists ? No - create one and generate OTP
 
         try {
-            $pregister->mobile = $request->get('mobile');
-            $enterdMobile = $request->get('mobile');
+            $pregister->mobile = $request->get('country_code') . $request->get('mobile');
+            $enterdMobile = $request->get('country_code') . $request->get('mobile');
             $pregister->otp = str_random(6);
             $pregister->ip_address = $request->ip();
             $pregister->fingerprint = $request->fingerprint();
@@ -60,11 +61,12 @@ class OtpController extends Controller {
         $this->validate($request, [
             'otp' => 'required|max:8',
             'mobile' => 'phone:US,BE,IN',
+            'country_code' => 'required_with:mobile',
             'mac' => 'required',
         ]);
 
         $enterdOtp = $request->get('otp');
-        $enterdMobile = $request->get('mobile');
+        $enterdMobile = $request->get('country_code') . $request->get('mobile');
         $userMacAddress = $request->get('mac');
         $ip = $request->ip();
         $fingureprint = $request->fingerprint();
@@ -84,6 +86,8 @@ class OtpController extends Controller {
                         if ($otp->save()) {
                             $user->mobile = $otp->mobile;
                             $user->v_status = 1;
+                            $user->name = $request->get('name');
+                            //$user->email = $request->get('email');
                             $user->password = \Hash::make($enterdOtp . $userMacAddress);
                             $user->ip_address = $request->ip();
                             $user->fingerprint = $request->fingerprint();
@@ -115,6 +119,8 @@ class OtpController extends Controller {
                     if ($userSingle != null && $enterdOtp == $otp->otp) {
                         if (30 > $otp->updated_at->diffInMinutes(Carbon::now())) {
                             $userSingle->password = \Hash::make($enterdOtp . $userMacAddress);
+                            $userSingle->name = $request->get('name');
+                            //$userSingle->email = $request->get('email');
                             $userSingle->ip_address = $request->ip();
                             $userSingle->fingerprint = $request->fingerprint();
                             $userSingle->created_at = $userSingle->created_at;
