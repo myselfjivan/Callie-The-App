@@ -38,7 +38,7 @@ class StatusController extends Controller {
     public function store(Request $request) {
 
         $this->validate($request, [
-            'Status' => 'required|min:1',
+            'status' => 'required|min:1',
         ]);
         $currentUser = JWTAuth::parseToken()->authenticate();
 
