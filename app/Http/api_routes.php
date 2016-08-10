@@ -4,19 +4,20 @@ $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', function ($api) {
 
-    //routes for user actions
-    $api->post('auth/pregister', 'App\Api\V1\Controllers\OtpController@p_register');
-    $api->post('auth/pverify', 'App\Api\V1\Controllers\OtpController@p_verify');
-
-    //protected routes with oauth for everything -- test 
-    $api->group(['middleware' => 'oauth'], function ($api) {
-        $api->post('auth/opreg', fucntion(){
-            return Response::json(Authorizer::issueAccessToken());
-        });
+    //route for getting access token oauth2 
+    $api->post('oauth/request', function() {
+        return Response::json(Authorizer::issueAccessToken());
     });
 
-    //routes for user authentication
-    $api->post('auth/login', 'App\Api\V1\Controllers\AuthenticateController@authenticate');
+    //protected routes with oauth2 for everything
+    $api->group(['middleware' => 'oauth'], function ($api) {
+        //routes for user actions
+        $api->post('auth/pregister', 'App\Api\V1\Controllers\OtpController@p_register');
+        $api->post('auth/pverify', 'App\Api\V1\Controllers\OtpController@p_verify');
+
+        //routes for user authentication
+        $api->post('auth/login', 'App\Api\V1\Controllers\AuthenticateController@authenticate');
+    });
 
     //routes for status
     $api->group(['middleware' => 'api.auth'], function ($api) {

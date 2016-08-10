@@ -143,9 +143,5 @@ class OtpController extends Controller {
             return $e;
         }
     }
-    
-    public function get_all(){
-        return \App\user::all();
-    }
 
 }
