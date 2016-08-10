@@ -36,6 +36,10 @@ class StatusController extends Controller {
     }
 
     public function store(Request $request) {
+
+        $this->validate($request, [
+            'Status' => 'required|min:1',
+        ]);
         $currentUser = JWTAuth::parseToken()->authenticate();
 
         $status = new Status;
@@ -48,24 +52,13 @@ class StatusController extends Controller {
             return $this->response->error('could_not_create_status', 500);
     }
 
-    public function show($id) {
-        $currentUser = JWTAuth::parseToken()->authenticate();
-
-        $status = $currentUser->status()->find($id);
-
-        if (!$status)
-            throw new NotFoundHttpException;
-
-        return $status;
-    }
-
     public function showOtherUserStatus($mobile) {
         $currentUser = JWTAuth::parseToken()->authenticate();
         $users = \App\User::where('mobile', $mobile)->get();
         foreach ($users as $user)
-        $statuses = \App\Status::where('user_id', $user->id)->get();
+            $statuses = \App\Status::where('user_id', $user->id)->get();
         foreach ($statuses as $status)
-        $last = $statuses->last();
+            $last = $statuses->last();
         $arr[] = array('status' => "$last->status", 'updated_at' => "$last->updated_at");
         return json_encode($arr);
     }
