@@ -1,0 +1,29 @@
+//todo
+auto status update and calculation over status e.g.
+    1) cellular network strenght and other status regarding call and data activity,
+    2) user battery status whenever it is critically low and other updates, 
+    3) user calling history,
+    4) sync with user callender to make phone profile depending on the event,
+    5) user task list if any ?,
+    6) custom status monitoring and result generation - kind of AI,
+
+2 ) Battery 
+    1.Determine the Current Charging State,
+        int status,
+        boolean isCharging,
+        int chargePlug,
+        boolean usbCharge,
+        boolean acCharge 
+
+    2.Monitor Changes in Charging State,
+        need to implement brodcast reciver for the step one
+
+    3.Determine the Current Battery Level,
+        int level,
+        int scale,
+        float batteryPct,
+    
+    4.Monitor Significant Changes in Battery Level,
+        implement battery level reciver
+        
+

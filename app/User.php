@@ -41,8 +41,8 @@ class User extends Authenticatable {
         return $this->hasMany('App\Contacts');
     }
 
-    public function pregister() {
-        return $this->hasMany('App\Otp');
+    public function battery() {
+        return $this->hasMany('App\UserBattery');
     }
 
 }
