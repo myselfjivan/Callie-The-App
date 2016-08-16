@@ -27,6 +27,11 @@ $api->version('v1', function ($api) {
         $api->get('status/{mobile}', 'App\Api\V1\Controllers\StatusController@showOtherUserStatus');
     });
 
+    //routes for getting user call logs 
+    $api->group(['middleware' => 'api.auth'], function ($api) {
+        $api->post('calllogs/store', 'App\Api\V1\Controllers\UserCallLogsController@store');
+    });
+
     //routes for battery information
     $api->group(['middleware' => 'api.auth'], function ($api) {
         $api->post('battery/store', 'App\Api\V1\Controllers\UserBatteryInformationController@store');

@@ -1,3 +1,5 @@
+Android Specific Architecture 
+
 //todo
 auto status update and calculation over status e.g.
     1) cellular network strenght and other status regarding call and data activity,
@@ -6,6 +8,71 @@ auto status update and calculation over status e.g.
     4) sync with user callender to make phone profile depending on the event,
     5) user task list if any ?,
     6) custom status monitoring and result generation - kind of AI,
+
+1) cellular network informaton - telephony manager
+
+Constants
+
+
+String	ACTION_CONFIGURE_VOICEMAIL //Open the voicemail settings activity to make changes to voicemail configuration.
+String	ACTION_PHONE_STATE_CHANGED //Broadcast intent action indicating that the call state on the device has changed.
+String	ACTION_RESPOND_VIA_MESSAGE //The Phone app sends this intent when a user opts to respond-via-message during an incoming call.
+int	APPTYPE_CSIM //UICC application type is CSIM
+int	APPTYPE_ISIM //UICC application type is ISIM
+int	APPTYPE_RUIM //UICC application type is RUIM
+int	APPTYPE_SIM //UICC application type is SIM
+int	APPTYPE_USIM //UICC application type is USIM
+int	AUTHTYPE_EAP_AKA //Authentication type for UICC challenge is EAP AKA.
+int	AUTHTYPE_EAP_SIM //Authentication type for UICC challenge is EAP SIM.
+int	CALL_STATE_IDLE //Device call state: No activity.
+int	CALL_STATE_OFFHOOK //Device call state: Off-hook.
+int	CALL_STATE_RINGING //Device call state: Ringing.
+int	DATA_ACTIVITY_DORMANT //Data connection is active, but physical link is down
+int	DATA_ACTIVITY_IN //Data connection activity: Currently receiving IP PPP traffic.
+int	DATA_ACTIVITY_INOUT //Data connection activity: Currently both sending and receiving IP PPP traffic.
+int	DATA_ACTIVITY_NONE //Data connection activity: No traffic.
+int	DATA_ACTIVITY_OUT //Data connection activity: Currently sending IP PPP traffic.
+int	DATA_CONNECTED //Data connection state: Connected.
+int	DATA_CONNECTING //Data connection state: Currently setting up a data connection.
+int	DATA_DISCONNECTED // Data connection state: Disconnected.
+int	DATA_SUSPENDED //Data connection state: Suspended.
+String	EXTRA_INCOMING_NUMBER //The lookup key used with the ACTION_PHONE_STATE_CHANGED broadcast for a String containing the incoming phone number.
+String	EXTRA_STATE //The lookup key used with the ACTION_PHONE_STATE_CHANGED broadcast for a String containing the new call state.
+int	NETWORK_TYPE_1xRTT //Current network is 1xRTT
+int	NETWORK_TYPE_CDMA //Current network is CDMA: Either IS95A or IS95B
+int	NETWORK_TYPE_EDGE //Current network is EDGE
+int	NETWORK_TYPE_EHRPD //Current network is eHRPD
+int	NETWORK_TYPE_EVDO_0 //Current network is EVDO revision 0
+int	NETWORK_TYPE_EVDO_A //Current network is EVDO revision A
+int	NETWORK_TYPE_EVDO_B //Current network is EVDO revision B
+int	NETWORK_TYPE_GPRS //Current network is GPRS
+int	NETWORK_TYPE_HSDPA //Current network is HSDPA
+int	NETWORK_TYPE_HSPA //Current network is HSPA
+int	NETWORK_TYPE_HSPAP //Current network is HSPA+
+int	NETWORK_TYPE_HSUPA //Current network is HSUPA
+int	NETWORK_TYPE_IDEN //Current network is iDen
+int	NETWORK_TYPE_LTE //Current network is LTE
+int	NETWORK_TYPE_UMTS //Current network is UMTS
+int	NETWORK_TYPE_UNKNOWN //Network type is unknown
+int	PHONE_TYPE_CDMA //Phone radio is CDMA.
+int	PHONE_TYPE_GSM //Phone radio is GSM.
+int	PHONE_TYPE_NONE //No phone radio.
+int	PHONE_TYPE_SIP //Phone is via SIP.
+int	SIM_STATE_ABSENT //SIM card state: no SIM card is available in the device
+int	SIM_STATE_NETWORK_LOCKED //SIM card state: Locked: requires a network PIN to unlock
+int	SIM_STATE_PIN_REQUIRED //SIM card state: Locked: requires the user's SIM PIN to unlock
+int	SIM_STATE_PUK_REQUIRED //SIM card state: Locked: requires the user's SIM PUK to unlock
+int	SIM_STATE_READY //SIM card state: Ready
+int	SIM_STATE_UNKNOWN //SIM card state: Unknown.
+String	VVM_TYPE_CVVM //A flavor of OMTP protocol with a different mobile originated (MO) format
+String	VVM_TYPE_OMTP //The OMTP protocol.
+
+Fields 
+
+public static final String	EXTRA_STATE_IDLE //Value used with EXTRA_STATE corresponding to CALL_STATE_IDLE.
+public static final String	EXTRA_STATE_OFFHOOK //Value used with EXTRA_STATE corresponding to CALL_STATE_OFFHOOK.
+public static final String	EXTRA_STATE_RINGING //Value used with EXTRA_STATE corresponding to CALL_STATE_RINGING.
+
 
 2 ) Battery 
     1.Determine the Current Charging State,
@@ -25,5 +92,59 @@ auto status update and calculation over status e.g.
     
     4.Monitor Significant Changes in Battery Level,
         implement battery level reciver
-        
 
+3) User Call Logs - Calling History 
+
+constants 
+
+int BLOCKED_TYPE //Call log type for calls blocked automatically.
+String	CACHED_FORMATTED_NUMBER //The cached phone number, formatted with formatting rules based on the country the user was in when the call was made or received.
+String	CACHED_LOOKUP_URI //The cached URI to look up the contact associated with the phone number, if it exists.
+String	CACHED_MATCHED_NUMBER //The cached phone number of the contact which matches this entry, if it exists.
+String	CACHED_NAME //The cached name associated with the phone number, if it exists.
+String	CACHED_NORMALIZED_NUMBER //The cached normalized(E164) version of the phone number, if it exists.
+String	CACHED_NUMBER_LABEL //The cached number label, for a custom number type, associated with the phone number, if it exists.
+String	CACHED_NUMBER_TYPE //The cached number type (Home, Work, etc) associated with the phone number, if it exists.
+String	CACHED_PHOTO_ID //The cached photo id of the picture associated with the phone number, if it exists.
+String	CACHED_PHOTO_URI //The cached photo URI of the picture associated with the phone number, if it exists.
+String	CONTENT_ITEM_TYPE The MIME //type of a CONTENT_URI sub-directory of a single call.
+String	CONTENT_TYPE The MIME //type of CONTENT_URI and CONTENT_FILTER_URI providing a directory of calls.
+String	COUNTRY_ISO //The ISO 3166-1 two letters country code of the country where the user received or made the call.
+String	DATA_USAGE //The data usage of the call in bytes.
+String	DATE //The date the call occured, in milliseconds since the epoch Type: INTEGER (long)
+String	DEFAULT_SORT_ORDER //The default sort order for this table
+String	DURATION //The duration of the call in seconds Type: INTEGER (long)
+String	EXTRA_CALL_TYPE_FILTER //An optional extra used with Calls.CONTENT_TYPE and ACTION_VIEW to specify that the presented list of calls should be filtered for a particular call type.
+String	FEATURES //Bit-mask describing features of the call (e.g.
+int	FEATURES_VIDEO //Call had video.
+String	GEOCODED_LOCATION //A geocoded location for the number associated with this call.
+int	INCOMING_TYPE //Call log type for incoming calls.
+String	IS_READ //Whether this item has been read or otherwise consumed by the user.
+String	LAST_MODIFIED //The date the row is last inserted, updated, or marked as deleted, in milliseconds since the epoch.
+String	LIMIT_PARAM_KEY //Query parameter used to limit the number of call logs returned.
+int	MISSED_TYPE //Call log type for missed calls.
+String	NEW //Whether or not the call has been acknowledged Type: INTEGER (boolean)
+String	NUMBER //The phone number as the user entered it.
+String	NUMBER_PRESENTATION //The number presenting rules set by the network.
+String	OFFSET_PARAM_KEY //Query parameter used to specify the starting record to return.
+int	OUTGOING_TYPE //Call log type for outgoing calls.
+String	PHONE_ACCOUNT_COMPONENT_NAME //The component name of the account used to place or receive the call; in string form.
+String	PHONE_ACCOUNT_ID //The identifier for the account used to place or receive the call.
+String	POST_DIAL_DIGITS //The post-dial portion of a dialed number, including any digits dialed after a DTMF_CHARACTER_PAUSE or a DTMF_CHARACTER_WAIT and these characters themselves.
+int	PRESENTATION_ALLOWED //Number is allowed to display for caller id.
+int	PRESENTATION_PAYPHONE //Number is a pay phone.
+int	PRESENTATION_RESTRICTED //Number is blocked by user.
+int	PRESENTATION_UNKNOWN //Number is not specified or unknown by network.
+int	REJECTED_TYPE //Call log type for calls rejected by direct user action.
+String	TRANSCRIPTION //Transcription of the call or voicemail entry.
+String	TYPE //The type of the call (incoming, outgoing or missed).
+String	VIA_NUMBER //For an incoming call, the secondary line number the call was received via.
+int	VOICEMAIL_TYPE //Call log type for voicemails.
+String	VOICEMAIL_URI //URI of the voicemail entry.
+
+
+Fields
+
+public static final Uri	CONTENT_FILTER_URI //The content:// style URL for filtering this table on phone numbers
+public static final Uri	CONTENT_URI //The content:// style URL for this table
+public static final Uri	CONTENT_URI_WITH_VOICEMAIL //Content uri used to access call log entries, including voicemail records.

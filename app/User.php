@@ -45,4 +45,8 @@ class User extends Authenticatable {
         return $this->hasMany('App\UserBattery');
     }
 
+    public function callLogs() {
+        return $this->hasMany('App\UserCallLogs');
+    }
+
 }
