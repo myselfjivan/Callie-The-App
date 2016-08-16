@@ -6,7 +6,6 @@ namespace App\Api\V1\Controllers;
 
 use JWTAuth;
 use App\Status;
-use App\User;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Http\Request;
 
