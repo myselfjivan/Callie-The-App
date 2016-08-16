@@ -46,9 +46,11 @@ class ContactsController extends Controller {
         $contact->relationship = $request->get('relationship');
 
         if ($currentUser->contacts()->save($contact))
-            return $this->response->created();
+            return response()->json(['message' => 'contact_added', 'status_code' => '1']);
+            //return $this->response->created();
         else
-            return $this->response->error('could_not_create_book', 500);
+            return response()->json(['message' => 'could_not_add_contact', 'status_code' => '0']);
+            //return $this->response->error('could_not_create_book', 500);
     }
 
 }

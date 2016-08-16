@@ -33,7 +33,8 @@ class OtpController extends Controller {
             if ($pregister->save())
                 return $pregister;
             else
-                return $this->response->error('error_could_not_register_number', 500);
+                return response()->json(['message' => 'could_not_register_number', 'status_code' => '0']);
+                //return $this->response->error('error_could_not_register_number', 500);
         } catch (\PDOException $e) {
 
             //check if user exists ? Yes - Regenerate OTP
@@ -49,7 +50,8 @@ class OtpController extends Controller {
                 if ($otp->save())
                     return $otp;
                 else
-                    return $this->response->error('error_could_not_register_number', 500);
+                    return response()->json(['message' => 'could_not_register_number', 'status_code' => '0']);
+                    //return $this->response->error('error_could_not_register_number', 500);
             } catch (\PDOException $e) {
                 return $e;
             }
@@ -97,15 +99,19 @@ class OtpController extends Controller {
                             if ($user->save()) {
                                 return $user;
                             } else {
-                                echo $this->response->error('error_adding_user', 500);
+                                return response()->json(['message' => 'error_adding_user', 'status_code' => '0']);
+                                //echo $this->response->error('error_adding_user', 500);
                             }
                         } else
-                            echo $this->response->error('error_adding_user_otp', 500);
+                            return response()->json(['message' => 'adding_user_otp', 'status_code' => '0']);
+                            //echo $this->response->error('error_adding_user_otp', 500);
                     }else {
-                        return $this->response->error('error_otp_expired', 500);
+                        return response()->json(['message' => 'otp_expired', 'status_code' => '0']);
+                        //return $this->response->error('error_otp_expired', 500);
                     }
                 } else {
-                    return $this->response->error('error_wrong_otp', 500);
+                    return response()->json(['message' => 'wrong_otp', 'status_code' => '0']);
+                    //return $this->response->error('error_wrong_otp', 500);
                 }
             }
         } catch (\PDOException $e) {
@@ -128,13 +134,16 @@ class OtpController extends Controller {
                             if ($userSingle->save()) {
                                 return $userSingle;
                             } else {
-                                echo $this->response->error('error_updating_key', 500);
+                                return response()->json(['message' => 'error_updating_key', 'status_code' => '0']);
+                                //echo $this->response->error('error_updating_key', 500);
                             }
                         } else {
-                            return $this->response->error('error_otp_expired', 500);
+                            return response()->json(['message' => 'otp_expired', 'status_code' => '0']);
+                            //return $this->response->error('error_otp_expired', 500);
                         }
                     } else {
-                        return $this->response->error('error_wrong_otp', 500);
+                        return response()->json(['message' => 'wrong_otp', 'status_code' => '0']);
+                        //return $this->response->error('error_wrong_otp', 500);
                     }
                 }
             } catch (\PDOException $e) {
