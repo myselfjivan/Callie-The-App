@@ -10,7 +10,8 @@
         "dingo/api": "1.0.x@dev",
         "tymon/jwt-auth": "0.5.*",
         "propaganistas/laravel-phone": "^2.7",
-        "lucadegasperi/oauth2-server-laravel": "5.1.*"
+        "lucadegasperi/oauth2-server-laravel": "5.1.*",
+        "jmarcher/laravel-request-logger": "1.0.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
