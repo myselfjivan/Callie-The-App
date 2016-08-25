@@ -1,0 +1,4 @@
+[10-Aug-2016 12:24:59 UTC] PHP Parse error:  syntax error, unexpected 'the' (T_STRING) in /home/atyourhouse/public_html/laravel_otp/vendor/league/oauth2-server/src/Exception/InvalidRequestException.php on line 39
+[10-Aug-2016 12:25:25 UTC] PHP Parse error:  syntax error, unexpected 'the' (T_STRING) in /home/atyourhouse/public_html/laravel_otp/vendor/league/oauth2-server/src/Exception/InvalidRequestException.php on line 39
+[10-Aug-2016 12:25:29 UTC] PHP Parse error:  syntax error, unexpected 'the' (T_STRING) in /home/atyourhouse/public_html/laravel_otp/vendor/league/oauth2-server/src/Exception/InvalidRequestException.php on line 39
+[10-Aug-2016 12:25:30 UTC] PHP Parse error:  syntax error, unexpected 'the' (T_STRING) in /home/atyourhouse/public_html/laravel_otp/vendor/league/oauth2-server/src/Exception/InvalidRequestException.php on line 39
