@@ -31,7 +31,8 @@ class OtpController extends Controller {
             $pregister->created_at = Carbon::now();
             $pregister->updated_at = Carbon::now();
             if ($pregister->save())
-                return $pregister;
+                //return $pregister;
+                return response()->json(['message' => 'success', 'status_code' => '1']);
             else
                 return response()->json(['message' => 'could_not_register_number', 'status_code' => '0']);
                 //return $this->response->error('error_could_not_register_number', 500);
@@ -48,7 +49,8 @@ class OtpController extends Controller {
                     $otp->updated_at = Carbon::now();
                 }
                 if ($otp->save())
-                    return $otp;
+                    //return $otp;
+                    return response()->json(['message' => 'success', 'status_code' => '1']);
                 else
                     return response()->json(['message' => 'could_not_register_number', 'status_code' => '0']);
                     //return $this->response->error('error_could_not_register_number', 500);
@@ -97,7 +99,8 @@ class OtpController extends Controller {
                             $user->created_at = Carbon::now();
                             $user->updated_at = Carbon::now();
                             if ($user->save()) {
-                                return $user;
+                                //return $user;
+                                return response()->json(['message' => 'success', 'status_code' => '1']);
                             } else {
                                 return response()->json(['message' => 'error_adding_user', 'status_code' => '0']);
                                 //echo $this->response->error('error_adding_user', 500);
@@ -132,7 +135,8 @@ class OtpController extends Controller {
                             $userSingle->created_at = $userSingle->created_at;
                             $userSingle->updated_at = Carbon::now();
                             if ($userSingle->save()) {
-                                return $userSingle;
+                                //return $userSingle;
+                                return response()->json(['message' => 'success', 'status_code' => '1']);
                             } else {
                                 return response()->json(['message' => 'error_updating_key', 'status_code' => '0']);
                                 //echo $this->response->error('error_updating_key', 500);
