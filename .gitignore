@@ -6,3 +6,6 @@ Homestead.json
 .env
 /nbproject/private/
 index.php
+.htaccess
+public/.htaccess
+
