@@ -7,5 +7,4 @@ Homestead.json
 /nbproject/private/
 index.php
 .htaccess
-public/.htaccess
-
+/public/.htaccess
