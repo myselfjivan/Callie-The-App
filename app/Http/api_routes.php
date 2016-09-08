@@ -8,6 +8,11 @@ $api->version('v1', function ($api) {
     $api->post('oauth/request', function() {
         return Response::json(Authorizer::issueAccessToken());
     });
+    
+    //route to get refresh token 
+    $api->post('oauth/rerequest', function() {
+        return Response::json(Authorizer::issueAccessToken());
+    });
 
     //protected routes with oauth2 for everything
     $api->group(['middleware' => 'oauth'], function ($api) {
