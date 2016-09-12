@@ -31,11 +31,11 @@ class OtpController extends Controller {
             $pregister->created_at = Carbon::now();
             $pregister->updated_at = Carbon::now();
             if ($pregister->save())
-                //return $pregister;
+            //return $pregister;
                 return response()->json(['message' => 'success', 'status_code' => '1']);
             else
                 return response()->json(['message' => 'could_not_register_number', 'status_code' => '0']);
-                //return $this->response->error('error_could_not_register_number', 500);
+            //return $this->response->error('error_could_not_register_number', 500);
         } catch (\PDOException $e) {
 
             //check if user exists ? Yes - Regenerate OTP
@@ -49,11 +49,11 @@ class OtpController extends Controller {
                     $otp->updated_at = Carbon::now();
                 }
                 if ($otp->save())
-                    //return $otp;
+                //return $otp;
                     return response()->json(['message' => 'success', 'status_code' => '1']);
                 else
                     return response()->json(['message' => 'could_not_register_number', 'status_code' => '0']);
-                    //return $this->response->error('error_could_not_register_number', 500);
+                //return $this->response->error('error_could_not_register_number', 500);
             } catch (\PDOException $e) {
                 return $e;
             }
@@ -107,7 +107,7 @@ class OtpController extends Controller {
                             }
                         } else
                             return response()->json(['message' => 'adding_user_otp', 'status_code' => '0']);
-                            //echo $this->response->error('error_adding_user_otp', 500);
+                        //echo $this->response->error('error_adding_user_otp', 500);
                     }else {
                         return response()->json(['message' => 'otp_expired', 'status_code' => '0']);
                         //return $this->response->error('error_otp_expired', 500);
