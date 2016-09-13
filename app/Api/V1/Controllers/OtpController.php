@@ -127,6 +127,8 @@ class OtpController extends Controller {
                 foreach ($usersArray as $userSingle) {
                     if ($userSingle != null && $enterdOtp == $otp->otp) {
                         if (30 > $otp->updated_at->diffInMinutes(Carbon::now())) {
+                            $allUsers = \App\User::all()->last();
+                            $userSingle->id = $allUsers->id + 1;
                             $userSingle->password = \Hash::make($enterdOtp . $userMacAddress);
                             $userSingle->name = $request->get('name');
                             //$userSingle->email = $request->get('email');

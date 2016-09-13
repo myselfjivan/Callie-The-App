@@ -14,7 +14,7 @@ class CreateUserCallLogsTable extends Migration {
         //
         Schema::create('call_logs', function (Blueprint $table) {
             $table->increments('id');
-
+            $table->string('mobile');
             $table->integer('BLOCKED_TYPE')->nullable(); //Call log type for calls blocked automatically.
             $table->string('CACHED_FORMATTED_NUMBER')->nullable(); //The cached phone number, formatted with formatting rules based on the country the user was in when the call was made or received.
             $table->string('CACHED_LOOKUP_URI')->nullable(); //The cached URI to look up the contact associated with the phone number, if it exists.

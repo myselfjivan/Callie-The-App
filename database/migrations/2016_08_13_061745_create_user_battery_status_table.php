@@ -14,6 +14,7 @@ class CreateUserBatteryStatusTable extends Migration {
 
         Schema::create('battery', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('mobile');
             $table->integer('status')->nullable();
             $table->boolean('isCharging')->nullable();
             $table->integer('chargePlug')->nullable();

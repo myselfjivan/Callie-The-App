@@ -20,6 +20,11 @@ class UserCallLogsController extends Controller {
             if (count($requestAll) <= 1) {
                 return response()->json(['message' => 'too_less_parameters', 'status_code' => '0']);
             } else {
+                $user = \Auth::User();
+                $callLog->mobile = \DB::table('users')
+                        ->select('mobile')
+                        ->where('id', $user->id)
+                        ->value('mobile');
                 $callLog->BLOCKED_TYPE = $request->get('BLOCKED_TYPE');
                 $callLog->CACHED_FORMATTED_NUMBER = $request->get('CACHED_FORMATTED_NUMBER');
                 $callLog->CACHED_LOOKUP_URI = $request->get('CACHED_LOOKUP_URI');

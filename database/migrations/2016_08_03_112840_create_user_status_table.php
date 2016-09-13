@@ -14,13 +14,12 @@ class CreateUserStatusTable extends Migration {
         Schema::create('status', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-
             // adding specific fields here...
             $table->string('status');
             //$table->string('author_name');
             //$table->integer('pages_count');
             $table->integer('user_id')->index();
-
+            $table->string('mobile');
             $table->timestamps();
         });
         //

@@ -17,7 +17,6 @@ class AuthenticateController extends Controller {
     use Helpers;
 
     public function authenticate(Request $request) {
-        $jwt = new JwtToken;
         $credentials = $request->only(['mobile', 'password']);
 
         $validator = Validator::make($credentials, [
@@ -36,16 +35,7 @@ class AuthenticateController extends Controller {
         } catch (JWTException $e) {
             return $this->response->error('could_not_create_token', 500);
         }
-
-        try {
-            $token = response()->json(compact('token'));
-            $jwt->mobile = $request->get('mobile');
-            $jwt->token = $token;
-            $jwt->save();
-            return $token;
-        } catch (\PDOException $e) {
-            return response()->json(['message' => 'token_generation_error', 'status_code' => '0']);
-        }
+        return response()->json(compact('token'));
     }
 
 }

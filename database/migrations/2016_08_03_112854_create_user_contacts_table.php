@@ -13,6 +13,7 @@ class CreateUserContactsTable extends Migration {
     public function up() {
         Schema::create('contacts', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('mobile');
             $table->string('name')->nullable();
             $table->string('phonetic_name')->nullable();
             $table->string('nick_name')->nullable();

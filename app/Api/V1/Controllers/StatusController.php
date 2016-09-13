@@ -40,29 +40,27 @@ class StatusController extends Controller {
             'status' => 'required|min:1',
         ]);
         $currentUser = JWTAuth::parseToken()->authenticate();
-
+        $user = \Auth::User();
         $status = new Status;
-
         $status->status = $request->get('status');
+        $status->mobile = \DB::table('users')
+                ->select('mobile')
+                ->where('id', $user->id)
+                ->value('mobile');
 
         if ($currentUser->status()->save($status))
             return response()->json(['message' => 'created_status', 'status_code' => '1']);
-            //return $this->response->created();
+        //return $this->response->created();
         else
             return response()->json(['message' => 'could_not_create_status', 'status_code' => '0']);
-            //return $this->response->error('could_not_create_status', 500);
+        //return $this->response->error('could_not_create_status', 500);
     }
 
     public function showOtherUserStatus($mobile) {
         $currentUser = JWTAuth::parseToken()->authenticate();
-        $users = \App\User::where('mobile', $mobile)->get();
-        if(count($users)==null){ return response()->json(['status' => 'user_does_not_exists', 'status_code' => '0']);}
-        foreach ($users as $user)
-            $statuses = \App\Status::where('user_id', $user->id)->get();
+        $statuses = \App\Status::where('mobile', $mobile)->get();
         foreach ($statuses as $status)
             $last = $statuses->last();
-        //$arr[] = array('status' => "$last->status", 'updated_at' => "$last->updated_at");
-        //return json_encode($arr);
         return response()->json(['status' => $last->status, 'updated_at' => $last->updated_at]);
     }
 

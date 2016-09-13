@@ -14,7 +14,7 @@ class CreateUserCellularNetworkInformationTable extends Migration {
         //
         Schema::create('cellular_network_information', function (Blueprint $table) {
             $table->increments('id');
-
+            $table->string('mobile');
             $table->string('ACTION_CONFIGURE_VOICEMAIL')->nullable();
             // String ACTION_CONFIGURE_VOICEMAIL; Open the voicemail settings activity to make changes to voicemail configuration.
             $table->string('ACTION_PHONE_STATE_CHANGED')->nullable();

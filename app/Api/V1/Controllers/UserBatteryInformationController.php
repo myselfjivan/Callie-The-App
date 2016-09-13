@@ -26,6 +26,11 @@ class UserBatteryInformationController extends Controller {
             if (count($requestAll) <= 1) {
                 return response()->json(['message' => 'too_less_parameters', 'status_code' => '0']);
             } else {
+                $user = \Auth::User();
+                $battery->mobile = \DB::table('users')
+                        ->select('mobile')
+                        ->where('id', $user->id)
+                        ->value('mobile');
 
                 $battery->status = $request->get('status');
                 $battery->isCharging = $request->get('isCharging');

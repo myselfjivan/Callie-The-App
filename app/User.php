@@ -49,8 +49,4 @@ class User extends Authenticatable {
         return $this->hasMany('App\UserCallLogs');
     }
 
-    public function jwtToken() {
-        return $this->hasMany('App\JwtToken');
-    }
-
 }

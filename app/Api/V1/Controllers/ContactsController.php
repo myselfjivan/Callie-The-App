@@ -25,6 +25,12 @@ class ContactsController extends Controller {
 
         $contact = new Contacts;
 
+        $user = \Auth::User();
+        $contact->mobile = \DB::table('users')
+                ->select('mobile')
+                ->where('id', $user->id)
+                ->value('mobile');
+
         $contact->name = $request->get('name');
         $contact->phonetic_name = $request->get('phonetic_name');
         $contact->nick_name = $request->get('nick_name');
@@ -47,10 +53,10 @@ class ContactsController extends Controller {
 
         if ($currentUser->contacts()->save($contact))
             return response()->json(['message' => 'contact_added', 'status_code' => '1']);
-            //return $this->response->created();
+        //return $this->response->created();
         else
             return response()->json(['message' => 'could_not_add_contact', 'status_code' => '0']);
-            //return $this->response->error('could_not_create_book', 500);
+        //return $this->response->error('could_not_create_book', 500);
     }
 
 }
