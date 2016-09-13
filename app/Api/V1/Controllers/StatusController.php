@@ -16,12 +16,9 @@ class StatusController extends Controller {
     //
     public function index() {
         $currentUser = JWTAuth::parseToken()->authenticate();
-        return $currentUser
-                        ->status()
-                        ->orderBy('created_at', 'DESC', 'LIMIT 1')
-                        ->limit('1')
-                        ->get()
-                        ->toArray();
+        $statuses = $currentUser->status;
+        $last = $statuses->last();
+        return response()->json(['status' => $last->status, 'updated_at' => $last->updated_at]);
     }
 
     public function last10() {
@@ -50,17 +47,14 @@ class StatusController extends Controller {
 
         if ($currentUser->status()->save($status))
             return response()->json(['message' => 'created_status', 'status_code' => '1']);
-        //return $this->response->created();
         else
             return response()->json(['message' => 'could_not_create_status', 'status_code' => '0']);
-        //return $this->response->error('could_not_create_status', 500);
     }
 
     public function showOtherUserStatus($mobile) {
         $currentUser = JWTAuth::parseToken()->authenticate();
         $statuses = \App\Status::where('mobile', $mobile)->get();
-        foreach ($statuses as $status)
-            $last = $statuses->last();
+        $last = $statuses->last();
         return response()->json(['status' => $last->status, 'updated_at' => $last->updated_at]);
     }
 
