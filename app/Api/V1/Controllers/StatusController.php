@@ -54,8 +54,7 @@ class StatusController extends Controller {
     public function showOtherUserStatus($mobile) {
         $currentUser = JWTAuth::parseToken()->authenticate();
         $statuses = \App\Status::where('mobile', $mobile)->get();
-        foreach ($statuses as $status)
-            $last = $statuses->last();
+        $last = $statuses->last();
         return response()->json(['status' => $last->status, 'updated_at' => $last->updated_at]);
     }
 
