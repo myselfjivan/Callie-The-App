@@ -25,7 +25,7 @@ class OtpController extends Controller {
         try {
             $pregister->mobile = $request->get('country_code') . $request->get('mobile');
             $enterdMobile = $request->get('country_code') . $request->get('mobile');
-            $pregister->otp = str_random(6);
+            $pregister->otp = mt_rand(100000, 999999);//str_random(6);
             $pregister->ip_address = $request->ip();
             $pregister->fingerprint = $request->fingerprint();
             $pregister->created_at = Carbon::now();
@@ -43,7 +43,7 @@ class OtpController extends Controller {
             try {
                 $otps = \App\Otp::where('mobile', $enterdMobile)->get();
                 foreach ($otps as $otp) {
-                    $otp->otp = str_random(6);
+                    $otp->otp = mt_rand(100000, 999999);//str_random(6);
                     $pregister->ip_address = $request->ip();
                     $pregister->fingerprint = $request->fingerprint();
                     $otp->updated_at = Carbon::now();
