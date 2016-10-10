@@ -35,7 +35,7 @@ class AuthenticateController extends Controller {
         } catch (JWTException $e) {
             return $this->response->error('could_not_create_token', 500);
         }
-        return response()->json(compact('token'));
+        return response()->json(['token' => $token, 'expires_in' => '1440']);
     }
 
 }
