@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 class OtpController extends Controller {
 
     use Helpers;
+    
+
 
     public function p_register(Request $request) {
         $this->validate($request, [
@@ -68,7 +70,7 @@ class OtpController extends Controller {
             'country_code' => 'required_with:mobile',
             'mac' => 'required',
         ]);
-
+        $dt = Carbon::parse(Carbon::now());
         $enterdOtp = $request->get('otp');
         $enterdMobile = $request->get('country_code') . $request->get('mobile');
         $userMacAddress = $request->get('mac');
@@ -90,8 +92,8 @@ class OtpController extends Controller {
                         if ($otp->save()) {
                             $user->mobile = $otp->mobile;
                             $user->v_status = 1;
+                            $user->id = $dt->timestamp;
                             $user->name = $request->get('name');
-                            //$user->email = $request->get('email');
                             $user->password = \Hash::make($enterdOtp . $userMacAddress);
                             $user->ip_address = $request->ip();
                             $user->fingerprint = $request->fingerprint();
@@ -127,11 +129,10 @@ class OtpController extends Controller {
                 foreach ($usersArray as $userSingle) {
                     if ($userSingle != null && $enterdOtp == $otp->otp) {
                         if (30 > $otp->updated_at->diffInMinutes(Carbon::now())) {
-                            $allUsers = \App\User::all()->last();
-                            $userSingle->id = $allUsers->id + 1;
+                            //$allUsers = \App\User::all()->last();
+                            $userSingle->id = $dt->timestamp;
                             $userSingle->password = \Hash::make($enterdOtp . $userMacAddress);
                             $userSingle->name = $request->get('name');
-                            //$userSingle->email = $request->get('email');
                             $userSingle->ip_address = $request->ip();
                             $userSingle->fingerprint = $request->fingerprint();
                             $userSingle->created_at = $userSingle->created_at;

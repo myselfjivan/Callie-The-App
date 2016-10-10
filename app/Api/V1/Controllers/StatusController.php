@@ -18,6 +18,9 @@ class StatusController extends Controller {
         $currentUser = JWTAuth::parseToken()->authenticate();
         $statuses = $currentUser->status;
         $last = $statuses->last();
+        if ($statuses->isEmpty()) {
+            return response()->json(['message' => 'No Status', 'status_code' => '0']);
+        }
         return response()->json(['status' => $last->status, 'updated_at' => $last->updated_at]);
     }
 
@@ -55,6 +58,9 @@ class StatusController extends Controller {
         $currentUser = JWTAuth::parseToken()->authenticate();
         $statuses = \App\Status::where('mobile', $mobile)->get();
         $last = $statuses->last();
+        if($statuses->isEmpty()){
+            return response()->json(['message' => 'No Status', 'status_code' => '0']);
+        }
         return response()->json(['status' => $last->status, 'updated_at' => $last->updated_at]);
     }
 
