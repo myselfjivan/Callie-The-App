@@ -1,7 +1,5 @@
 <?php
 
-//namespace App\Http\Controllers;
-
 namespace App\Api\V1\Controllers;
 
 use JWTAuth;
@@ -23,7 +21,6 @@ class StatusController extends Controller {
                 ->where('id', $user->id)
                 ->value('mobile');
         $statuses = \App\Status::where('mobile', $status->mobile)->get();
-        //$statuses = $currentUser->status;
         $last = $statuses->last();
         if ($statuses->isEmpty()) {
             return response()->json(['message' => 'No Status', 'status_code' => '0']);
@@ -39,28 +36,10 @@ class StatusController extends Controller {
                 ->select('mobile')
                 ->where('id', $user->id)
                 ->value('mobile');
-        $statuses = \App\Status::where('mobile', $status->mobile)->get();
-        $status = $statuses->take(10);
-        $plucked =  $status->pluck('status');
-        return $plucked;
-        //foreach($status as $abcd){
-            //echo json_encode(['status' => $status->pluck('status')]);
-        //}
-        //$plucked = $statuseses->pluck('status');
-        //return response()->json(['satatus' => $statuses->pluck('status'), 'updated_at' => $statuses->pluck('updated_at')]);
-        //return response()->json([$status]);
-//        foreach ($status as $status1) {
-//            //echo $status['status'];
-//            //echo json(['status' => $status->status]);
-//            echo json_encode(['status' => $status1('status')]);
-//        }
-        //return response()->json(['status' => $statuses->status]);
-//      return $currentUser
-//                        ->status()
-//                        ->orderBy('created_at', 'DESC', 'LIMIT 1')
-//                        ->limit('10')
-//                        ->get()
-//                        ->toArray();
+        $statuses = \App\Status::where('mobile', $status->mobile)
+                ->select('status', 'updated_at')
+                ->get();
+        return response()->json($statuses->take(10));
     }
 
     public function store(Request $request) {
@@ -87,7 +66,7 @@ class StatusController extends Controller {
         $currentUser = JWTAuth::parseToken()->authenticate();
         $statuses = \App\Status::where('mobile', $mobile)->get();
         $last = $statuses->last();
-        if($statuses->isEmpty()){
+        if ($statuses->isEmpty()) {
             return response()->json(['message' => 'No Status', 'status_code' => '0']);
         }
         return response()->json(['status' => $last->status, 'updated_at' => $last->updated_at]);
